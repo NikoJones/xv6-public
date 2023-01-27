@@ -5,33 +5,30 @@
 int
 main(int argc, char *argv[])
 {
-    int start = uptime();
-
-    printf(1, "%d ", start);
+    printf(1, "uptime: %d\n", uptime());
 
     // argument
     if (argc < 2){
-        printf(1, "usage: exectime command argument-list\n");
+        printf(2, "usage: exectime command argument-list\n");
         exit();
     }
 
     int pid = fork();
 
     if (pid == -1){
-        printf(1, "fork error\n");
+        printf(2, "fork error\n");
+        exit();
     }
 
     if (pid == 0){
         exec(argv[1], argv+1);
+        printf(2, "child error\n");
+        exit();
     }
 
-    if (pid > 0) {
-        wait();
-    }
-    
+    wait();
     
     // end time
-    int myTime = uptime();
-    printf(1, "%d", myTime);
+    printf(1, "uptime: %d\n", uptime());
     exit();
 }
